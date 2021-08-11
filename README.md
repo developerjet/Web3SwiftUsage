@@ -1,7 +1,5 @@
-# Web3EtherKit
-web3 contract call
-
-、、、
+## Web3EtherKit
+# web3 contract call
 
 import UIKit
 import web3swift
@@ -670,6 +668,3 @@ extension CSContractManager {
     }
     
 }
-
-
-、、、
