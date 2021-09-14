@@ -18,7 +18,7 @@ enum CSContractCallType {
 }
 ```
 
-### 智能主要业务调用
+### 智能合约主要业务调用
 
 ``` swift
 
