@@ -1,54 +1,71 @@
-## Web3EtherKit
-# web3 contract call
+## Web3Swift常用业务代码整理
+## Web3Swift useg
 
+### 导入Web3Swift主要库
+
+```
 import UIKit
 import web3swift
 import BigInt
+```
 
+### 定义合约操作类型
+
+```swift
 enum CSContractCallType {
-    case write
-    case read
+  case write
+  case read
 }
+```
 
-enum InfuraType {
-    
-    static let rinkeby = "https://rinkeby.infura.io/v3/4a95f60324fa444d9f3eb79040ee8285"
-    
-    static let kovan = "https://kovan.infura.io/v3/2fd1b260e62e4f6fab379ceecf722fc4"
-    
-    static let product = "https://kovan.infura.io/v3/2fd1b260e62e4f6fab379ceecf722fc4"
-}
+### 智能主要业务调用
 
-private typealias Contract = CSContractInfo
-
-struct CSContractInfo {
-    
-    /// trader
-    static let traderAddress = "0xDE0B9c6beF2c1C1238E346F032bfC8662D01FbE5"
-    
-    /// approve amount
-    static let approveAmount = "1000000000000000000000"
-    
-    /// web3 default password
-    static let password = "web3swift"
-}
+``` swift
 
 @objcMembers public class CSContractManager: NSObject {
     
-    /// manager
+    /// shared
     static let shared = CSContractManager()
     
     /// web3
     private var web3Manager: web3?
-    
-    /// networks
-    private var infuraNetworks: [String] {
-        return [InfuraType.rinkeby, InfuraType.kovan]
-    }
 
+    /// default password
+    private var password: String {
+        return "web3swift"
+    }
+        
+    /// network configs
+    private var networkConfigs: [CSContractNetConfig] {
+        //rinkeby
+        [CSContractNetConfig(ipUrl: "https://rinkeby.infura.io/v3/4a95f60324fa444d9f3eb79040ee8285", netType: .rinkeby, traderAddress: "0xdC36f51eFb853446B50299654a1Ae0918D05f9e8", factoryAddress: "0xf3Ba58fB6E9e557D627f3EE84bf42b7aC0cff00E"),
+         // binance
+         CSContractNetConfig(ipUrl: "https://data-seed-prebsc-1-s1.binance.org:8545", netType: .binance, traderAddress: "0xF3696b6c5dd3EEc9E1Ada380ee071a89CAAa709c", factoryAddress: "0x82708a1e4B27341d81798777374f22A07f3E3097")]
+    }
+    
+    /// now contract network
+    var network: CSContractNetConfig {
+        return networkConfigs[self.networkIndex]
+    }
+    
+    /// selected network  type
+    var networkType: CSContractInfuraType {
+        return network.netType
+    }
+    
+    /// wallet Currency
+    var walletCurrency: String {
+        switch self.networkType {
+        case .rinkeby:
+            return "ETH"
+        default:
+            return "BNB"
+        }
+    }
+    
     /// network  selected index
     private var networkIndex: Int {
-        guard let index = UserDefaults.standard.value(forKey: "kWeb3NetworkTypeKey") as? Int else {
+        guard let index = UserDefaults.standard.value(forKey: kWeb3NetworkTypeKey) as? Int else {
             return 0
         }
         return index
@@ -56,7 +73,7 @@ struct CSContractInfo {
     
     /// contractURL
     private var contractURL: String {
-        return infuraNetworks[networkIndex]
+        return networkConfigs[self.networkIndex].ipUrl
     }
     
     override init() { }
@@ -126,9 +143,9 @@ struct CSContractInfo {
         
         var params: [AnyObject] = [AnyObject]()
         // spender
-        params.append(Contract.traderAddress as AnyObject)
-        // amount
-        params.append(Contract.approveAmount as AnyObject)
+        params.append(network.factoryAddress as AnyObject)
+        /// approve amount
+        params.append(config.approveAmount as AnyObject)
         
         // 注意：需要设置ABI类型
         callContractService(.erc20, methodName: "approve", callType: .write, params: params, config: config) { transResult in
@@ -148,7 +165,7 @@ struct CSContractInfo {
         guard let from = config.from, let ownerAddress = EthereumAddress(from) else {
             return
         }
-        guard let spenderAddress = EthereumAddress(Contract.traderAddress)  else {
+        guard let spenderAddress = EthereumAddress(network.traderAddress)  else {
             return
         }
         
@@ -173,7 +190,7 @@ struct CSContractInfo {
         // _symbol
         params.append(symbol as AnyObject)
         // _token
-        params.append(token as AnyObject)
+        params.append(token.lowercased() as AnyObject)
         
         // 注意：需要设置ABI类型
         callContractService(.factory, methodName: "isAllowedToken", callType: .read, params: params, config: config) { transResult in
@@ -192,7 +209,7 @@ struct CSContractInfo {
         
         let formattedKey = privateKey.trimmingCharacters(in: .whitespacesAndNewlines)
         let dataKey = Data.fromHex(formattedKey)!
-        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: Contract.password)
+        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: password)
         let keystoreManager = KeystoreManager([keystore! as EthereumKeystoreV3])
         
         /// web3
@@ -236,7 +253,7 @@ struct CSContractInfo {
         
         let formattedKey = privateKey.trimmingCharacters(in: .whitespacesAndNewlines)
         let dataKey = Data.fromHex(formattedKey)!
-        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: Contract.password)
+        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: password)
         let keystoreManager = KeystoreManager([keystore! as EthereumKeystoreV3])
         
         /// web3
@@ -330,7 +347,7 @@ struct CSContractInfo {
     private func callContractService(_ abiType: CSContractAbiType = .erc20, methodName: String, callType: CSContractCallType, params: [AnyObject] = [AnyObject](), config: CSContractConfig, closure: @escaping (CSContractTransResult)->Void) {
         
         if let object = config.modelToJSONObject() {
-            print("Call configs：\(object)")
+            print("Contract call config：\(object)")
         }
         
         let transResult = CSContractTransResult()
@@ -340,7 +357,7 @@ struct CSContractInfo {
         
         let formattedKey = privateKey.trimmingCharacters(in: .whitespacesAndNewlines)
         let dataKey = Data.fromHex(formattedKey)!
-        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: Contract.password)
+        let keystore = try! EthereumKeystoreV3(privateKey: dataKey, password: password)
         let keystoreManager = KeystoreManager([keystore! as EthereumKeystoreV3])
         
         /// web3
@@ -465,8 +482,7 @@ struct CSContractInfo {
                 transResult.callData = result
                 if let tokenWei = result["0"] as? BigUInt {
                     transResult.callStatus = tokenWei > 0
-                }
-                else if let status = result["0"] as? Bool {
+                }else if let status = result["0"] as? Bool {
                     transResult.callStatus = status
                 }
                 
@@ -484,7 +500,7 @@ struct CSContractInfo {
         
         // Get transaction result
         do {
-            let result = try tx.send(password: Contract.password, transactionOptions: options)
+            let result = try tx.send(password: password, transactionOptions: options)
             completion(result)
             
             print("Transaction hash：\(result.hash)\n")
@@ -604,10 +620,11 @@ struct CSContractInfo {
     }
     
 }
+```
 
+### Extension - ABI
 
-// MARK: - ABI
-
+```swift
 extension CSContractManager {
     
     func fetchAbiType(type: CSContractAbiType) -> String {
@@ -637,10 +654,11 @@ extension CSContractManager {
     }
     
 }
+```
 
+### Extension - Block scan
 
-// MARK: - Ether scan
-
+```swift
 extension CSContractManager {
     
     public func etherScan(txHash: String) {
@@ -653,8 +671,8 @@ extension CSContractManager {
         case .rinkeby:
             baseUrl = "https://rinkeby.etherscan.io/tx/"
             
-        case .kovan:
-            baseUrl = "https://kovan.etherscan.io/tx/"
+        case .binance:
+            baseUrl = "https://testnet.bscscan.com/tx/"
             
         default:
             break
@@ -668,3 +686,5 @@ extension CSContractManager {
     }
     
 }
+```
+
