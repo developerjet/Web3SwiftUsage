@@ -1,0 +1,32 @@
+[
+    {
+        "inputs": [
+            {
+                "internalType": "address[2]",
+                "name": "addrs",
+                "type": "address[2]"
+            },
+            {
+                "internalType": "uint256[2]",
+                "name": "uints",
+                "type": "uint256[2]"
+            },
+            {
+                "internalType": "uint8[]",
+                "name": "_vs",
+                "type": "uint8[]"
+            },
+            {
+                "internalType": "bytes32[]",
+                "name": "_rssMetadata",
+                "type": "bytes32[]"
+            }
+        ],
+        "name": "withdrawToken",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+]
+
+

@@ -1,0 +1,6 @@
+framework module Pods_Web3SwiftUtils {
+  umbrella header "Pods-Web3SwiftUtils-umbrella.h"
+
+  export *
+  module * { export * }
+}

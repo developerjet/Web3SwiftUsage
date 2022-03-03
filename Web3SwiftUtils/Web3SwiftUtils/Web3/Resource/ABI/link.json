@@ -1,0 +1,328 @@
+[
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_factory",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_luca",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_wluca",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_trader",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_weth",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_pledger",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [],
+		"name": "agree",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "close",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "depledge",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCloseInfo",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "closer_",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "startTime_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "expiredTime_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "closeTime_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "closeReqA_",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "closeReqB_",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getLinkInfo",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "symbol_",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "token_",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "userA_",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "userB_",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountA_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amountB_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "percentA_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalPlan_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lockDays_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "startTime_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "status_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isAward_",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getPledgedInfo",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "pledgedA_",
+				"type": "bool"
+			},
+			{
+				"internalType": "bool",
+				"name": "pledgedB_",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getRecevabesInfo",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "receivableA_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isExitA_",
+				"type": "bool"
+			},
+			{
+				"internalType": "uint256",
+				"name": "receivableB_",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "isExitB_",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getStatus",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "status_",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userA",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_userB",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_token",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_percentA",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_lockDays",
+				"type": "uint256"
+			}
+		],
+		"name": "initialize",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "isExpire",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "pledge",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "reject",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "rejectClose",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "repealCloseReq",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userB",
+				"type": "address"
+			}
+		],
+		"name": "setUserB",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "wtihdrawSelf",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
