@@ -73,5 +73,13 @@ class ViewController: UIViewController {
         print("Token Symbol:\(token.symbol)\n")
         print("Token decimals:\(token.decimals)\n")
     }
+    
+    /// 查询当前钱包账户余额
+    func queryAccountBalance () {
+        
+        let myWalletAddress = "your walletAddress";
+        let balance = CSContractManager.shared.getAccountBalance(address: myWalletAddress)
+        print("Your account balance:\(balance)")
+    }
 }
 

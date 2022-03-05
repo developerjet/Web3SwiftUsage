@@ -35,7 +35,6 @@
         config.abiType = .erc20;
         config.privateKey = "your privateKey"
         config.from = "your walletAddress";
-        config.approveAmount = "1000000000000";
         config.contractAddress = "contract address"
         config.symbol = "token symbol"
         config.gasLimit = kBaseGasLimit;
@@ -63,5 +62,15 @@
         print("Token Name:\(token.name)\n")
         print("Token Symbol:\(token.symbol)\n")
         print("Token decimals:\(token.decimals)\n")
+    }
+```
+
+```swift
+    /// 查询当前钱包账户余额
+    func queryAccountBalance () {
+        
+        let myWalletAddress = "your walletAddress";
+        let balance = CSContractManager.shared.getAccountBalance(address: myWalletAddress)
+        print("Your account balance:\(balance)")
     }
 ```
