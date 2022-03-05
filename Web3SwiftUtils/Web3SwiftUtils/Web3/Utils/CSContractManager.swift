@@ -37,19 +37,8 @@ enum CSContractCallType {
         return "1000000000"
     }
     
-    /// baseURL
-    private var appBaseUrl: String {
-        guard let baseUrl = UserDefaults.standard.value(forKey: "kBaseURL") as? String else {
-            return ""
-        }
-        return baseUrl
-    }
-    
     /// environmentType
     private var environmentType: CSEnvironmentType {
-        if (self.appBaseUrl == "https://webapi.monkey.wiki/") {
-            return .pro
-        }
         return .dev
     }
         
